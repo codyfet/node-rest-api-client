@@ -3,7 +3,7 @@
 
 Клиентская часть на react.
 Прежде чем запускать клиентскую часть, необходимо скачать и запустить серверную часть, которая располжена здесь:
-[node-rest-api-server](https://github.com/codyfet/) 
+[node-rest-api-server](https://github.com/codyfet/node-rest-api-server) 
 
 Для запуска клиентской части выполнить:
 
