@@ -31,6 +31,6 @@ export const deleteProduct = (id) => {
 /**
  * Обновить запись по id.
  */
-export const updateProduct = (id) => {
-    return axios.put('http://localhost:1234/product/' + id + '/update');
+export const updateProduct = (id, model) => {
+    return axios.put('http://localhost:1234/product/' + id + '/update', model);
 }

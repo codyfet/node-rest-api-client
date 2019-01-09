@@ -27,27 +27,46 @@ export class App extends React.Component {
         )
     }
 
+    /**
+     * Актуализирует список записей в таблице.
+     */
+    refreshTable = () => {
+        getProducts().then(
+            (response) => {
+                this.setState({
+                    list: response.data
+                });
+            }
+        );
+    }
+
+    /**
+     * Обработчик отображения/скрытия модального окна "Изменение продукта".
+     */
     handleToggleEditModal = () => {
         this.setState({
             showEditModal: !this.state.showEditModal
         });
     }
 
+    /**
+     * Обработчик создания продукта.
+     * 
+     * @param {Object} model Данные создаваемого продукта.
+     */
     handleCreateProduct = (model) => {
         createProduct(model).then(
             (response) => {
-                // Актуализируем список.
-                getProducts().then(
-                    (response_) => {
-                        this.setState({
-                            list: response_.data
-                        });
-                    }
-                )
+                this.refreshTable();
             }
         );
     }
 
+    /**
+     * Обработчик получения продукта по его id.
+     * 
+     * @param {Object} event DOM событие.
+     */
     handleGetProductById = (event) => {
         const id = event.target.parentElement.parentElement.parentElement.id;
 
@@ -61,37 +80,33 @@ export class App extends React.Component {
         )
     }
 
+    /**
+     * Обработчик удаления продукта.
+     * 
+     * @param {Object} event DOM событие.
+     */
     handleDeleteProduct = (event) => {
         const id = event.target.parentElement.parentElement.parentElement.id;
 
         deleteProduct(id).then(
             (response) => {
-                // Актуализируем список.
-                getProducts().then(
-                    (response_) => {
-                        this.setState({
-                            list: response_.data
-                        });
-                    }
-                )
+                this.refreshTable();
             }
         )
     }
 
-    handleUpdateProduct = () => {
+    /**
+     * Обработчик изменения модели.
+     * 
+     * @param {Object} model Изменённая модель.
+     */
+    handleUpdateProduct = (model) => {
         const id = this.state.selectedModel._id;
 
-        // TODO: Здесь надо передавать измененную модель.
-        updateProduct(id).then(
+        updateProduct(id, model).then(
             (response) => {
-                // Актуализируем список.
-                getProducts().then(
-                    (response_) => {
-                        this.setState({
-                            list: response_.data
-                        });
-                    }
-                )
+                this.refreshTable();
+                this.setState({selectedModel: null})
             }
         )
     }
@@ -103,12 +118,11 @@ export class App extends React.Component {
                     <Col xs={6} xsOffset={3}>
                         <ProductTable 
                             list={this.state.list}
-                            deleteProduct={this.handleDeleteProduct}
-                            getProductById={this.handleGetProductById}
+                            onDeleteProduct={this.handleDeleteProduct}
+                            onGetProductById={this.handleGetProductById}
                         />
                         <ActionsBar 
                             onToggleEditModal={this.handleToggleEditModal}
-                            // TODO onGetProductById
                         />
                     </Col>
                 </Row>
@@ -121,6 +135,6 @@ export class App extends React.Component {
                     />
                 )}
             </React.Fragment>
-        )
+        );
     }
 }

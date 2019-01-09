@@ -26,10 +26,10 @@ export const ProductTable = (props) => {
                                     <td>{item.name}</td>
                                     <td>{item.price}</td>
                                     <td>
-                                        <Button className="action-btn" bsSize="xsmall" onClick={props.getProductById}>
+                                        <Button className="action-btn" bsSize="xsmall" onClick={props.onGetProductById}>
                                             <Glyphicon glyph="pencil" title="Изменить" />
                                         </Button>
-                                        <Button className="action-btn" bsSize="xsmall" title="Удалить" onClick={props.deleteProduct}>
+                                        <Button className="action-btn" bsSize="xsmall" title="Удалить" onClick={props.onDeleteProduct}>
                                             <Glyphicon glyph="remove" />
                                         </Button>
                                     </td>
